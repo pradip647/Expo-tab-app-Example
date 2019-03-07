@@ -1,7 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View,WebView } from 'react-native';
-import { Colors, Fonts } from '../constants';
+import { StyleSheet, Text, View,ScrollView ,TouchableOpacity,Platform,WebView} from 'react-native';
+import { Colors,Fonts } from '../constants';
 import { MonoText } from '../components/StyledText';
+
 import {
   AdMobBanner,
   AdMobInterstitial,
@@ -9,9 +10,11 @@ import {
   AdMobRewarded
 } from 'expo';
 
-export default class SettingsScreen extends React.Component {
+import { Icon, Card } from 'react-native-elements';
+
+export default class MobileappsScreen extends React.Component {
   static navigationOptions = {
-    title: 'Google',
+    title: 'Mobile Apps',
     headerStyle: {
       backgroundColor: Colors.theme.header.primary,
     },
@@ -22,9 +25,20 @@ export default class SettingsScreen extends React.Component {
     },
     
   };
-  componentWillMount(){
-    this.openad()
+
+  constructor(props){ 
+      super(props);
+      this.state={detailsData:''}
   }
+
+  componentWillMount(){
+    let data  = this.props.navigation.getParam("appdata")
+    if(data){
+        this.setState({detailsData:data});
+    }
+    this.openad();
+  }
+
   async openad(){
     AdMobRewarded.setAdUnitID('ca-app-pub-4296647029451731/2793615653'); // Test ID, Replace with your-admob-unit-id
     // AdMobRewarded.setTestDeviceID('EMULATOR');
@@ -32,15 +46,14 @@ export default class SettingsScreen extends React.Component {
     await AdMobRewarded.showAdAsync();
   }
 
-
   render() {
     return (
       <View style={styles.container}>
         <WebView
-            source={{uri: 'https://google.com'}}
+            source={{uri: this.state.detailsData ? this.state.detailsData : 'https://google.com'}}
             style={{marginTop: 20,}}
         />
-        <AdMobBanner
+      <AdMobBanner
         bannerSize="fullBanner"
         adUnitID="ca-app-pub-4296647029451731/4860738427" // Test ID, Replace with your-admob-unit-id
         // testDeviceID="EMULATOR"
@@ -54,7 +67,6 @@ export default class SettingsScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: Colors.theme.backgroundColor,
     backgroundColor: Colors.theme.whiteColor
   },
 });

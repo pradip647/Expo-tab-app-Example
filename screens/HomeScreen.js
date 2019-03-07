@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View,ScrollView ,TouchableOpacity} from 'react-native';
+import { StyleSheet, Text, View,ScrollView ,TouchableOpacity,Platform} from 'react-native';
 import { Colors,Fonts } from '../constants';
 import { MonoText } from '../components/StyledText';
 
@@ -10,6 +10,9 @@ import {
   AdMobRewarded
 } from 'expo';
 
+// in managed apps:
+import { WebBrowser } from 'expo';
+import { Icon, Card, Button } from 'react-native-elements';
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -22,61 +25,97 @@ export default class HomeScreen extends React.Component {
       fontWeight: 'bold',
       fontSize:Fonts.extra
     },
+    // headerRight: 
+    // (<TouchableOpacity 
+    //   onPress={() => {this.checkAPI()}}
+    // style={{paddingLeft:10,paddingRight:20,height:'100%',justifyContent:"center"}}>
+    //     <Icon
+    //   name={Platform.OS === 'ios' ? 'ios-refresh' : 'md-refresh'}
+    //     type="ionicon"
+    //     size={26}
+    //     color={Colors.theme.text.primary}
+    //     component={TouchableOpacity}
+    //     containerStyle={{marginLeft: 20}}
+        
+    //   />
+    // </TouchableOpacity>),
     
   };
 
-  constructor(props){ super(props);}
-
-  async openad(){
-    AdMobInterstitial.setAdUnitID('ca-app-pub-4296647029451731/3761734588'); // Test ID, Replace with your-admob-unit-id
-    AdMobInterstitial.setTestDeviceID('EMULATOR');
-    await AdMobInterstitial.requestAdAsync();
-    await AdMobInterstitial.showAdAsync();
+  constructor(props){ 
+    super(props);
+    this.state={data:[]}
   }
+
+  componentWillMount(){
+    this.checkAPI()
+
+  }
+  async checkAPI(){
+    await fetch('https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=948af4d66828418aac87103c2f73207d')
+    .then((response) => response.json())
+    .then((responseJson) => {
+      if(responseJson.articles){
+
+          this.setState({data:responseJson.articles})
+
+        
+      }
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+  }
+
+
 
   render() {
     return (
       <View style={styles.container}>
       <ScrollView>
-        {/* <TouchableOpacity onPress={()=>{this.openad()}}><Text>clickme</Text></TouchableOpacity> */}
-      <View style={{margin:10, paddingBottom:10 }}>
-          <MonoText style={{fontSize:Fonts.extra}}>What is Lorem Ipsum?</MonoText> 
 
-          <Text style={{fontSize:Fonts.default, color:Colors.theme.text.secondary}}>
-          <MonoText style={{fontSize:Fonts.default,color:Colors.theme.text.primary}}>Lorem Ipsum </MonoText> 
-          is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</Text>
-      </View>
-
-      <View style={{margin:10, paddingBottom:10 }}>
-          <MonoText style={{fontSize:Fonts.extra}}>What is Lorem Ipsum?</MonoText> 
-
-          <Text style={{fontSize:Fonts.default, color:Colors.theme.text.light}}>
-          <MonoText style={{fontSize:Fonts.default,color:Colors.theme.text.primary}}>Lorem Ipsum </MonoText> 
-          is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</Text>
-      </View>
-
-      <View style={{margin:10, paddingBottom:10 }}>
-          <MonoText style={{fontSize:Fonts.extra}}>What is Lorem Ipsum?</MonoText> 
-
-          <Text style={{fontSize:Fonts.default, color:Colors.theme.text.extraLight}}>
-          <MonoText style={{fontSize:Fonts.default,color:Colors.theme.text.primary}}>Lorem Ipsum </MonoText> 
-          is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</Text>
-      </View>
-
-      <View style={{margin:10, paddingBottom:10 }}>
-          <MonoText style={{fontSize:Fonts.extra}}>What is Lorem Ipsum?</MonoText> 
-
-          <Text style={{fontSize:Fonts.default, color:Colors.theme.text.extraLight}}>
-          <MonoText style={{fontSize:Fonts.default,color:Colors.theme.text.primary}}>Lorem Ipsum </MonoText> 
-          is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</Text>
-      </View>
+        {this.state.data ? 
+        this.state.data.map((item,i)=>{
+          return(
+            <View key={i} style={{justifyContent:"center"}}>
+            <TouchableOpacity 
+              onPress={()=>{this.props.navigation.navigate('Details',{itemdata:item})}}
+            >
+                <Card
+                  title={item.title}
+                  image={{uri:item.urlToImage}}
+                  >
+                  <Text style={{marginBottom: 10}}>
+                    {item.author}
+                  </Text>
+                  <Text style={{marginBottom: 10}}>
+                    {item.publishedAt}
+                  </Text>
+                  <Text style={{marginBottom: 10}}>
+                    {item.description}
+                  </Text>
+                </Card>
+            </TouchableOpacity>
+            {(i == 9) ? 
+                <AdMobBanner
+                bannerSize="fullBanner"
+                adUnitID="ca-app-pub-4296647029451731/4860738427" // Test ID, Replace with your-admob-unit-id
+                // testDeviceID="EMULATOR"
+                onDidFailToReceiveAdWithError={this.bannerError} />
+            :null
+            }
+        </View>
+           )
+        })
+        :<Text>No Data found</Text>
+      } 
 
         </ScrollView>
-        {/* <AdMobBanner
+        <AdMobBanner
         bannerSize="fullBanner"
         adUnitID="ca-app-pub-4296647029451731/4860738427" // Test ID, Replace with your-admob-unit-id
         // testDeviceID="EMULATOR"
-        onDidFailToReceiveAdWithError={this.bannerError} /> */}
+        onDidFailToReceiveAdWithError={this.bannerError} />
       </View>
     );
   }

@@ -8,9 +8,12 @@ import LinksScreen from '../screens/LinksScreen';
 import SettingsScreen from '../screens/SettingsScreen';
 
 import { Colors,Fonts } from '../constants';
+import DetailsScreen from '../screens/Details';
+import MobileappsScreen from '../screens/MobileappsScreen';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
+  Details:DetailsScreen
 });
 
 HomeStack.navigationOptions = {
@@ -18,11 +21,6 @@ HomeStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      // name={
-      //   Platform.OS === 'ios'
-      //     ? `ios-home${focused ? '' : '-outline'}`
-      //     : 'md-home'
-      // }
       name={Platform.OS === 'ios' ? 'ios-home' : 'md-home'}
     />
   ),
@@ -30,6 +28,7 @@ HomeStack.navigationOptions = {
 
 const LinksStack = createStackNavigator({
   Links: LinksScreen,
+  MobileappsScreen:MobileappsScreen
 });
 
 LinksStack.navigationOptions = {
@@ -37,7 +36,7 @@ LinksStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-chatboxes' : 'md-chatboxes'}
+      name={Platform.OS === 'ios' ? 'ios-arrow-dropup' : 'md-arrow-dropup'}
       color={'#ffffff'}
     />
   ),
@@ -52,7 +51,7 @@ SettingsStack.navigationOptions = {
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === 'ios' ? 'ios-settings' : 'md-settings'}
+      name={Platform.OS === 'ios' ? 'ios-search' : 'md-search'}
     />
   ),
 };
