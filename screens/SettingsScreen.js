@@ -23,10 +23,10 @@ export default class SettingsScreen extends React.Component {
     
   };
   componentWillMount(){
-    this.openad()
+   this.openad()
   }
   async openad(){
-    AdMobRewarded.setAdUnitID('ca-app-pub-4296647029451731/2793615653'); // Test ID, Replace with your-admob-unit-id
+    AdMobRewarded.setAdUnitID('ca-app-pub-4296647029451731/8447085050'); // Test ID, Replace with your-admob-unit-id
     // AdMobRewarded.setTestDeviceID('EMULATOR');
     await AdMobRewarded.requestAdAsync();
     await AdMobRewarded.showAdAsync();
@@ -42,8 +42,8 @@ export default class SettingsScreen extends React.Component {
         />
         <AdMobBanner
         bannerSize="fullBanner"
-        adUnitID="ca-app-pub-4296647029451731/4860738427" // Test ID, Replace with your-admob-unit-id
-        // testDeviceID="EMULATOR"
+        adUnitID="ca-app-pub-4296647029451731/1773687885" // Test ID, Replace with your-admob-unit-id
+        testDeviceID="EMULATOR"
         onDidFailToReceiveAdWithError={this.bannerError} />
       </View>
     );

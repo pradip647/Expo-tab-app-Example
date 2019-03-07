@@ -99,8 +99,8 @@ export default class HomeScreen extends React.Component {
             {(i == 9) ? 
                 <AdMobBanner
                 bannerSize="fullBanner"
-                adUnitID="ca-app-pub-4296647029451731/4860738427" // Test ID, Replace with your-admob-unit-id
-                // testDeviceID="EMULATOR"
+                adUnitID="ca-app-pub-4296647029451731/1773687885" // Test ID, Replace with your-admob-unit-id
+                testDeviceID="EMULATOR"
                 onDidFailToReceiveAdWithError={this.bannerError} />
             :null
             }
@@ -113,8 +113,8 @@ export default class HomeScreen extends React.Component {
         </ScrollView>
         <AdMobBanner
         bannerSize="fullBanner"
-        adUnitID="ca-app-pub-4296647029451731/4860738427" // Test ID, Replace with your-admob-unit-id
-        // testDeviceID="EMULATOR"
+        adUnitID="ca-app-pub-4296647029451731/1773687885" // Test ID, Replace with your-admob-unit-id
+        testDeviceID="EMULATOR"
         onDidFailToReceiveAdWithError={this.bannerError} />
       </View>
     );
