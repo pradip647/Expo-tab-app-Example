@@ -36,15 +36,17 @@ export default class MobileappsScreen extends React.Component {
     if(data){
         this.setState({detailsData:data});
     }
-   this.openad();
+    this.showAd();
   }
 
-  async openad(){
-    AdMobRewarded.setAdUnitID('ca-app-pub-4296647029451731/8447085050'); // Test ID, Replace with your-admob-unit-id
-    // AdMobRewarded.setTestDeviceID('EMULATOR');
-    await AdMobRewarded.requestAdAsync();
-    await AdMobRewarded.showAdAsync();
+  async showAd(){
+    
+    AdMobInterstitial.setAdUnitID('ca-app-pub-4296647029451731/5359691944');
+    AdMobInterstitial.setTestDeviceID('EMULATOR');
+    await AdMobInterstitial.requestAdAsync();
+    await AdMobInterstitial.showAdAsync();   
   }
+
 
   render() {
     return (
@@ -53,11 +55,11 @@ export default class MobileappsScreen extends React.Component {
             source={{uri: this.state.detailsData ? this.state.detailsData : 'https://google.com'}}
             style={{marginTop: 20,}}
         />
-      <AdMobBanner
-        bannerSize="fullBanner"
-        adUnitID="ca-app-pub-4296647029451731/1773687885" // Test ID, Replace with your-admob-unit-id
-        testDeviceID="EMULATOR"
-        onDidFailToReceiveAdWithError={this.bannerError} />
+        <AdMobBanner
+          bannerSize="fullBanner"
+          adUnitID="ca-app-pub-4296647029451731/1773687885" // Test ID, Replace with your-admob-unit-id
+          testDeviceID="EMULATOR"
+          onDidFailToReceiveAdWithError={this.bannerError} />
       </View>
     );
   }

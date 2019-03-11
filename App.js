@@ -3,6 +3,18 @@ import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { AppLoading, Asset, Font, Icon } from 'expo';
 import AppNavigator from './navigation/AppNavigator';
 
+import * as firebase from 'firebase';
+var config = {
+  apiKey: "AIzaSyAx7yEVGIBRXT_LH-HKN_0BgZ5QkKMbGqg",
+  authDomain: "demoexample-1897c.firebaseapp.com",
+  databaseURL: "https://demoexample-1897c.firebaseio.com",
+  projectId: "demoexample-1897c",
+  storageBucket: "demoexample-1897c.appspot.com",
+  messagingSenderId: "478499248555"
+};
+firebase.initializeApp(config);
+
+
 export default class App extends React.Component {
   state = {
     isLoadingComplete: false,

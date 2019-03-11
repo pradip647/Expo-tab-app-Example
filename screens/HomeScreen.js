@@ -1,18 +1,14 @@
 import React from 'react';
-import { StyleSheet, Text, View,ScrollView ,TouchableOpacity,Platform} from 'react-native';
+import { StyleSheet, View,Text,ScrollView,Platform} from 'react-native';
 import { Colors,Fonts } from '../constants';
-import { MonoText } from '../components/StyledText';
-
-import {
-  AdMobBanner,
-  AdMobInterstitial,
-  PublisherBanner,
-  AdMobRewarded
-} from 'expo';
-
 // in managed apps:
 import { WebBrowser } from 'expo';
-import { Icon, Card, Button } from 'react-native-elements';
+import * as firebase from 'firebase';
+import {
+  AdMobBanner,
+} from 'expo';
+import CustomCardItem from '../components/CustomCardItem';
+
 
 export default class HomeScreen extends React.Component {
   static navigationOptions = {
@@ -44,78 +40,78 @@ export default class HomeScreen extends React.Component {
 
   constructor(props){ 
     super(props);
-    this.state={data:[]}
+    this.state={postData:[]}
   }
 
   componentWillMount(){
     this.checkAPI()
-
   }
+
+
   async checkAPI(){
-    await fetch('https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=948af4d66828418aac87103c2f73207d')
-    .then((response) => response.json())
-    .then((responseJson) => {
-      if(responseJson.articles){
-
-          this.setState({data:responseJson.articles})
-
-        
-      }
+    let ref = firebase.database().ref('newdata');
+    ref.once('value',(snapshot)=>{
+        if(snapshot.val()){
+          let newArr = [];
+          let postdetails = snapshot.val();
+          for (let key in postdetails){
+            postdetails[key].id = key;
+            newArr.push(postdetails[key]);
+          }
+          this.setState({postData:[]},()=>{
+            this.setState({postData:newArr},()=>{this.forceUpdate();})
+          })
+          
+        }
     })
-    .catch((error) => {
-      console.error(error);
-    });
   }
 
+  async gotoDetailsScreen(item){
+    this.props.navigation.navigate('Details',{companyDetails:item})
+  }
 
+  bannerError() {
+    console.log("An error");
+  }
+
+  showbannerAd(){
+    return <AdMobBanner
+    bannerSize="fullBanner"
+    adUnitID="ca-app-pub-4296647029451731/1773687885" // Test ID, Replace with your-admob-unit-id
+    // testDeviceID="EMULATOR"
+    onDidFailToReceiveAdWithError={this.bannerError} />
+  }
+  
 
   render() {
     return (
       <View style={styles.container}>
-      <ScrollView>
+          <ScrollView>
+              {this.state.postData ? 
+                  this.state.postData.map((item,i)=>{
+                      return(
+                          <View key={i} style={{justifyContent:"center"}}>
+                              <CustomCardItem
+                                positionName={item.position?item.position:''}
+                                companyName={item.companyName?item.companyName:''}
+                                companyAddress={item.address?item.address:''}
+                                skills={item.skill?item.skill:''}
+                                sendMessagePress={()=>{alert("Send Message function not implement yet.")}}
+                                detailsPress={()=>{this.gotoDetailsScreen(item)}}
+                              />
+                          </View>
+                      )
+                  })
 
-        {this.state.data ? 
-        this.state.data.map((item,i)=>{
-          return(
-            <View key={i} style={{justifyContent:"center"}}>
-            <TouchableOpacity 
-              onPress={()=>{this.props.navigation.navigate('Details',{itemdata:item})}}
-            >
-                <Card
-                  title={item.title}
-                  image={{uri:item.urlToImage}}
-                  >
-                  <Text style={{marginBottom: 10}}>
-                    {item.author}
-                  </Text>
-                  <Text style={{marginBottom: 10}}>
-                    {item.publishedAt}
-                  </Text>
-                  <Text style={{marginBottom: 10}}>
-                    {item.description}
-                  </Text>
-                </Card>
-            </TouchableOpacity>
-            {(i == 9) ? 
-                <AdMobBanner
-                bannerSize="fullBanner"
-                adUnitID="ca-app-pub-4296647029451731/1773687885" // Test ID, Replace with your-admob-unit-id
-                testDeviceID="EMULATOR"
-                onDidFailToReceiveAdWithError={this.bannerError} />
-            :null
-            }
-        </View>
-           )
-        })
-        :<Text>No Data found</Text>
-      } 
+              :<Text>No Data found</Text>
 
-        </ScrollView>
-        <AdMobBanner
-        bannerSize="fullBanner"
-        adUnitID="ca-app-pub-4296647029451731/1773687885" // Test ID, Replace with your-admob-unit-id
-        testDeviceID="EMULATOR"
-        onDidFailToReceiveAdWithError={this.bannerError} />
+              } 
+
+          </ScrollView>
+          <View >
+              {this.showbannerAd()}
+          </View>
+        
       </View>
     );
   }

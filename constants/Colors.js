@@ -2,6 +2,7 @@ const tintColor = '#2f95dc';
 
 export default {
   tintColor,
+
   facebookColor:'#3b5999',
   instagramColor:'#e4405f',
   youtubeColor:'#cd201f',
@@ -12,7 +13,12 @@ export default {
   theme:{
     backgroundColor:'#9B94DE',
     whiteColor:'#ffffff',
-    blackColor:'#000000',
+    blackColor:{
+      primary:'#1B1B1B',
+      secondary:'#202020',
+      lightBorder:'#C6C6C6',
+      background:'#323232'
+    },
 
     header:{
       primary: '#212121',
