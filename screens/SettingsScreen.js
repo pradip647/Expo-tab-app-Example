@@ -9,12 +9,9 @@ import {
   AdMobRewarded
 } from 'expo';
 
-import * as firebase from 'firebase';
-import { Icon } from 'react-native-elements';
-
 export default class SettingsScreen extends React.Component {
   static navigationOptions = {
-    title: 'ADs List',
+    title: 'Loream ipsum',
     headerStyle: {
       backgroundColor: Colors.theme.header.primary,
     },
@@ -22,90 +19,34 @@ export default class SettingsScreen extends React.Component {
     headerTitleStyle: {
       fontWeight: 'bold',
       fontSize:Fonts.extra
-    }
+    },
   };
 
   constructor(props){
     super(props);
     this.state={
-      Interstitial1:false,
-      Interstitial2:false,
-      Interstitial3:false,
-      Interstitial4:false,
-      Interstitial5:false,
-      Interstitial6:false,
-      Interstitial7:false,
-      Interstitial8:false,
-      Interstitial9:false,
-     Interstitial10:false,
+      Interstitial1:true,
+      Interstitial2:true,
+      Interstitial3:true,
+      Interstitial4:true,
+      Interstitial5:true,
+      Interstitial6:true,
+      Interstitial7:true,
+      Interstitial8:true,
+      Interstitial9:true,
+     Interstitial10:true,
 
-      ViewoAd1:false,
-      ViewoAd2:false,
-      ViewoAd3:false,
-      ViewoAd4:false,
-      ViewoAd5:false,
-      ViewoAd6:false,
-      ViewoAd7:false,
-      ViewoAd8:false,
-      ViewoAd9:false,
-     ViewoAd10:false
+      ViewoAd1:true,
+      ViewoAd2:true,
+      ViewoAd3:true,
+      ViewoAd4:true,
+      ViewoAd5:true,
+      ViewoAd6:true,
+      ViewoAd7:true,
+      ViewoAd8:true,
+      ViewoAd9:true,
+     ViewoAd10:true
     }
-  }
-
-  checkData(){
-    let ref = firebase.database().ref('addetails');
-    ref.once('value', (snapshot)=>{
-      if(snapshot.val()){
-        let allAdData = snapshot.val();
-        if(allAdData.Interstitial1){this.setState({Interstitial1:false})}else{this.setState({Interstitial1:true})}
-        if(allAdData.Interstitial2){this.setState({Interstitial2:false})}else{this.setState({Interstitial2:true})}
-        if(allAdData.Interstitial3){this.setState({Interstitial3:false})}else{this.setState({Interstitial3:true})}
-        if(allAdData.Interstitial4){this.setState({Interstitial4:false})}else{this.setState({Interstitial4:true})}
-        if(allAdData.Interstitial5){this.setState({Interstitial5:false})}else{this.setState({Interstitial5:true})}
-        if(allAdData.Interstitial6){this.setState({Interstitial6:false})}else{this.setState({Interstitial6:true})}
-        if(allAdData.Interstitial7){this.setState({Interstitial7:false})}else{this.setState({Interstitial7:true})}
-        if(allAdData.Interstitial8){this.setState({Interstitial8:false})}else{this.setState({Interstitial8:true})}
-        if(allAdData.Interstitial9){this.setState({Interstitial9:false})}else{this.setState({Interstitial9:true})}
-        if(allAdData.Interstitial10){this.setState({Interstitial10:false})}else{this.setState({Interstitial10:true})}
-
-        if(allAdData.ViewoAd1 ){this.setState({ViewoAd1:false})}else{this.setState({ViewoAd1:true})}
-        if(allAdData.ViewoAd2 ){this.setState({ViewoAd2:false})}else{this.setState({ViewoAd2:true})}
-        if(allAdData.ViewoAd3 ){this.setState({ViewoAd3:false})}else{this.setState({ViewoAd3:true})}
-        if(allAdData.ViewoAd4 ){this.setState({ViewoAd4:false})}else{this.setState({ViewoAd4:true})}
-        if(allAdData.ViewoAd5 ){this.setState({ViewoAd5:false})}else{this.setState({ViewoAd5:true})}
-        if(allAdData.ViewoAd6 ){this.setState({ViewoAd6:false})}else{this.setState({ViewoAd6:true})}
-        if(allAdData.ViewoAd7 ){this.setState({ViewoAd7:false})}else{this.setState({ViewoAd7:true})}
-        if(allAdData.ViewoAd8 ){this.setState({ViewoAd8:false})}else{this.setState({ViewoAd8:true})}
-        if(allAdData.ViewoAd9 ){this.setState({ViewoAd9:false})}else{this.setState({ViewoAd9:true})}
-        if(allAdData.ViewoAd10){this.setState({ViewoAd10:false})}else{this.setState({ViewoAd10:true})}
-
-      }else{
-        this.setState({
-          Interstitial1:true,
-          Interstitial2:true,
-          Interstitial3:true,
-          Interstitial4:true,
-          Interstitial5:true,
-          Interstitial6:true,
-          Interstitial7:true,
-          Interstitial8:true,
-          Interstitial9:true,
-         Interstitial10:true,
-    
-          ViewoAd1:true,
-          ViewoAd2:true,
-          ViewoAd3:true,
-          ViewoAd4:true,
-          ViewoAd5:true,
-          ViewoAd6:true,
-          ViewoAd7:true,
-          ViewoAd8:true,
-          ViewoAd9:true,
-         ViewoAd10:true
-        })
-      }
-    })
-
   }
 
   componentWillMount(){
@@ -115,7 +56,6 @@ export default class SettingsScreen extends React.Component {
     AdMobInterstitial.setAdUnitID('ca-app-pub-4296647029451731/5359691944');
     AdMobInterstitial.setTestDeviceID('EMULATOR');
 
-   this.checkData();
   }
 
   showbannerAd(){
@@ -126,18 +66,30 @@ export default class SettingsScreen extends React.Component {
     onDidFailToReceiveAdWithError={this.bannerError} />
   }
 
-  showReward(value){
-    this.showVAD();
-    firebase.database().ref('addetails/' + value + '/').set(true).then((success)=>{
-      this.checkData();
-    })
-  }
-
   showInterstitial(value){
-    this.showInAD();
-    firebase.database().ref('addetails/' + value + '/').set(true).then((success)=>{
-      this.checkData();
-    })
+
+    if(value == "Interstitial1"){ this.setState({Interstitial1:false},()=>  {this.showInAD(); })}
+    if(value == "Interstitial2"){ this.setState({Interstitial2:false},()=>  {this.showInAD(); })}
+    if(value == "Interstitial3"){ this.setState({Interstitial3:false},()=>  {this.showInAD(); })}
+    if(value == "Interstitial4"){ this.setState({Interstitial4:false},()=>  {this.showInAD(); })}
+    if(value == "Interstitial5"){ this.setState({Interstitial5:false},()=>  {this.showInAD(); })}
+    if(value == "Interstitial6"){ this.setState({Interstitial6:false},()=>  {this.showInAD(); })}
+    if(value == "Interstitial7"){ this.setState({Interstitial7:false},()=>  {this.showInAD(); })}
+    if(value == "Interstitial8"){ this.setState({Interstitial8:false},()=>  {this.showInAD(); })}
+    if(value == "Interstitial9"){ this.setState({Interstitial9:false},()=>  {this.showInAD(); })}
+    if(value == "Interstitial10"){ this.setState({Interstitial10:false},()=>{this.showInAD();})}
+
+    if(value == "ViewoAd1"){ this.setState({ViewoAd1:false},()=>{this.showVAD();  })}
+    if(value == "ViewoAd2"){ this.setState({ViewoAd2:false},()=>{this.showVAD();  })}
+    if(value == "ViewoAd3"){ this.setState({ViewoAd3:false},()=>{this.showVAD();  })}
+    if(value == "ViewoAd4"){ this.setState({ViewoAd4:false},()=>{this.showVAD();  })}
+    if(value == "ViewoAd5"){ this.setState({ViewoAd5:false},()=>{this.showVAD();  })}
+    if(value == "ViewoAd6"){ this.setState({ViewoAd6:false},()=>{this.showVAD();  })}
+    if(value == "ViewoAd7"){ this.setState({ViewoAd7:false},()=>{this.showVAD();  })}
+    if(value == "ViewoAd8"){ this.setState({ViewoAd8:false},()=>{this.showVAD();  })}
+    if(value == "ViewoAd9"){ this.setState({ViewoAd9:false},()=>{this.showVAD();  })}
+    if(value == "ViewoAd10"){ this.setState({ViewoAd10:false},()=>{this.showVAD(); })}
+
   }
 
   async showInAD(){
@@ -247,7 +199,7 @@ export default class SettingsScreen extends React.Component {
 
           {this.state.ViewoAd1 == true ? 
             <TouchableOpacity 
-            onPress={()=>{this.showReward('ViewoAd1')}}
+            onPress={()=>{this.showInterstitial('ViewoAd1')}}
             style={{padding:10, justifyContent:"center"}}
             >
                 <Text> Video AD 1</Text>
@@ -256,7 +208,7 @@ export default class SettingsScreen extends React.Component {
 
           {this.state.ViewoAd2 == true ? 
             <TouchableOpacity 
-            onPress={()=>{this.showReward('ViewoAd2')}}
+            onPress={()=>{this.showInterstitial('ViewoAd2')}}
             style={{padding:10, justifyContent:"center"}}
             >
                 <Text> Video AD 2</Text>
@@ -265,7 +217,7 @@ export default class SettingsScreen extends React.Component {
 
           {this.state.ViewoAd3 == true ? 
             <TouchableOpacity 
-            onPress={()=>{this.showReward('ViewoAd3')}}
+            onPress={()=>{this.showInterstitial('ViewoAd3')}}
             style={{padding:10, justifyContent:"center"}}
             >
                 <Text> Video AD 3</Text>
@@ -274,7 +226,7 @@ export default class SettingsScreen extends React.Component {
 
           {this.state.ViewoAd4 == true ? 
             <TouchableOpacity 
-            onPress={()=>{this.showReward('ViewoAd4')}}
+            onPress={()=>{this.showInterstitial('ViewoAd4')}}
             style={{padding:10, justifyContent:"center"}}
             >
                 <Text> Video AD 4</Text>
@@ -283,7 +235,7 @@ export default class SettingsScreen extends React.Component {
 
           {this.state.ViewoAd5 == true ? 
             <TouchableOpacity 
-            onPress={()=>{this.showReward('ViewoAd5')}}
+            onPress={()=>{this.showInterstitial('ViewoAd5')}}
             style={{padding:10, justifyContent:"center"}}
             >
                 <Text> Video AD 5</Text>
@@ -292,7 +244,7 @@ export default class SettingsScreen extends React.Component {
 
           {this.state.ViewoAd6 == true ? 
             <TouchableOpacity 
-            onPress={()=>{this.showReward('ViewoAd6')}}
+            onPress={()=>{this.showInterstitial('ViewoAd6')}}
             style={{padding:10, justifyContent:"center"}}
             >
                 <Text> Video AD 6</Text>
@@ -301,7 +253,7 @@ export default class SettingsScreen extends React.Component {
 
           {this.state.ViewoAd7 == true ? 
             <TouchableOpacity 
-            onPress={()=>{this.showReward('ViewoAd7')}}
+            onPress={()=>{this.showInterstitial('ViewoAd7')}}
             style={{padding:10, justifyContent:"center"}}
             >
                 <Text> Video AD 7</Text>
@@ -310,7 +262,7 @@ export default class SettingsScreen extends React.Component {
 
           {this.state.ViewoAd8 == true ? 
             <TouchableOpacity 
-            onPress={()=>{this.showReward('ViewoAd8')}}
+            onPress={()=>{this.showInterstitial('ViewoAd8')}}
             style={{padding:10, justifyContent:"center"}}
             >
                 <Text> Video AD 8</Text>
@@ -319,7 +271,7 @@ export default class SettingsScreen extends React.Component {
 
           {this.state.ViewoAd9 == true ? 
             <TouchableOpacity 
-            onPress={()=>{this.showReward('ViewoAd9')}}
+            onPress={()=>{this.showInterstitial('ViewoAd9')}}
             style={{padding:10, justifyContent:"center"}}
             >
                 <Text> Video AD 9</Text>
@@ -328,7 +280,7 @@ export default class SettingsScreen extends React.Component {
 
           {this.state.ViewoAd10 == true ? 
             <TouchableOpacity 
-            onPress={()=>{this.showReward('ViewoAd10')}}
+            onPress={()=>{this.showInterstitial('ViewoAd10')}}
             style={{padding:10, justifyContent:"center"}}
             >
                 <Text> Video AD 10</Text>
