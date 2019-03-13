@@ -309,3 +309,4 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.theme.whiteColor
   },
 });
+

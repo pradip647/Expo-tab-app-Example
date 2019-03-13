@@ -32,13 +32,13 @@ const CustomCardItem = ({sendMessagePress,detailsPress,positionName, companyName
 
                     <View style={{height:0.7, backgroundColor:Colors.theme.blackColor.lightBorder,flexDirection:'row'}}></View>
 
-                    <View style={{paddingTop:10, flexDirection:"row", justifyContent:"space-between"}}>
+                    <View style={{paddingTop:10, flexDirection:"row", justifyContent:"space-between", width:'100%'}}>
                         <TouchableOpacity onPress={sendMessagePress}>
-                            <Text style={{color:Colors.theme.text.primary, fontSize:Fonts.extraLight, fontWeight:"bold"}}>SEND MESSAGE</Text>
+                            <Text style={{color:Colors.theme.text.primary, fontSize:Fonts.extraLight, fontWeight:"bold", width:'100%'}}>SEND MESSAGE</Text>
                         </TouchableOpacity>
 
                         <TouchableOpacity onPress={detailsPress}>
-                            <Text style={{color:Colors.theme.text.primary,fontSize:Fonts.extraLight, fontWeight:"bold"}}>DETAILS</Text>
+                            <Text style={{color:Colors.theme.text.primary,fontSize:Fonts.extraLight, fontWeight:"bold", width:'100%'}}>DETAILS</Text>
                         </TouchableOpacity>
                     </View>
 
