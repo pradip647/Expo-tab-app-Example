@@ -6,22 +6,33 @@ import { MonoText } from '../components/StyledText';
 import { Icon, Card,Image,Input } from 'react-native-elements';
 
 export default class SigninScreen extends React.Component {
+  static navigationOptions = {
+    // title: 'Details',
+    header:null,
+    headerStyle: {
+      backgroundColor: '#343b45',
+      borderBottomWidth:0
+    },
+    headerTintColor: Colors.theme.whiteColor,
+    headerTitleStyle: {
+      fontWeight: 'bold',
+      fontSize:Fonts.extra
+    },
+    
+  };
   constructor(props){ super(props); }
 
   render() {
     return (
       <View style={styles.container}>
-        {/* <ScrollView> */}
-            {/* <View style={{justifyContent:"center",marginTop:Dimensions.get('window').height/6}}>
-                    <Image
-                        source={require('.././assets/images/icon.png')}
-                        style={{ width: 150, height: 150,alignSelf:"center" }}
-                      />
-                      <Text style={{textAlign:"center"}}>Welcome</Text>
-            </View> */}
-
-            {/* <View style={{height:Dimensions.get('window').height/8}}></View> */}
-
+        <ScrollView>
+            <View style={{paddingTop:30}}>
+                <Image
+                    source={require('.././assets/images/logo.png')}
+                    style={{ width: 200, height: 200,alignSelf:"center" }}
+                />
+            </View>
+        
 
             <View style={{flexDirection:"row",alignSelf:"center",paddingTop:10,paddingBottom:5,width:'80%'}}>
                         <View style={{ flex:1,justifyContent:"center",backgroundColor:'#2e3339'}}>
@@ -36,7 +47,7 @@ export default class SigninScreen extends React.Component {
                         <Input
                             placeholder='Password'
                             placeholderTextColor="#5D646D"
-                            inputStyle={{justifyContent:"center",fontSize:14,color:'#5D646D'}}
+                            inputStyle={{justifyContent:"center",fontSize:14,color:'#fff'}}
                             containerStyle={{padding:4,backgroundColor:'#3E4750',alignSelf:"center"}}
                             underlineColorAndroid="transparent"
                             inputContainerStyle={{borderBottomWidth:0}}
@@ -58,7 +69,7 @@ export default class SigninScreen extends React.Component {
                         <Input
                             placeholder='Password'
                             placeholderTextColor="#5D646D"
-                            inputStyle={{justifyContent:"center",fontSize:14,color:'#5D646D'}}
+                            inputStyle={{justifyContent:"center",fontSize:14,color:'#fff'}}
                             containerStyle={{padding:4,backgroundColor:'#3E4750',alignSelf:"center"}}
                             underlineColorAndroid="transparent"
                             inputContainerStyle={{borderBottomWidth:0}}
@@ -85,41 +96,20 @@ export default class SigninScreen extends React.Component {
 
             <View style={{flexDirection:"row",alignSelf:"center",width:'80%',marginTop:50}}>
                         <View style={{ flex:5.5,justifyContent:"center",backgroundColor:'#2e3339',padding:5}}>
-                        <TouchableOpacity >
+                        <TouchableOpacity onPress={()=>{this.props.navigation.navigate('Signup')}}>
                                 <Text style={{color:'#fff',textAlign:"center",fontSize:14,paddingTop:10,paddingBottom:10,fontWeight:"bold",letterSpacing:2}}> REGISTER</Text>
                               </TouchableOpacity>
-                        </View>    
-                        <View style={{ flex:1,justifyContent:"center",backgroundColor:'#FFB842',padding:0}}>
-                              <Icon
-                                  name={Platform.OS === 'ios'? 'ios-play' : 'ios-play'}
+                        </View>   
+                        <View style={{ flex:1,justifyContent:"center",backgroundColor:'#FFB842',padding:5}}>
+                                <Icon
+                                  name={Platform.OS === 'ios'? 'ios-arrow-forward' : 'ios-arrow-forward'}
                                   size={23} color='#fff' type="ionicon"
                                   containerStyle={{padding:0,justifyContent:"flex-start"}}
                                   iconStyle={{padding:0}}
                                 />
-                        </View>        
+                        </View> 
             </View>
-
-
-
-
-
-            {/* </View> */}
-            {/* </ScrollView> */}
-            {/* <View style={{flexDirection:"row",alignSelf:"center",width:'80%',paddingBottom:50}}>
-                        <View style={{ flex:5.5,justifyContent:"center",backgroundColor:'#2e3339',padding:4}}>
-                        <TouchableOpacity >
-                                <Text style={{color:'#fff',textAlign:"center",fontSize:14,paddingTop:10,paddingBottom:10,fontWeight:"bold",letterSpacing:2}}> REGISTER</Text>
-                              </TouchableOpacity>
-                        </View>    
-                        <View style={{ flex:1,justifyContent:"center",backgroundColor:'#FFB842'}}>
-                              <Icon
-                                  name={Platform.OS === 'ios'? 'ios-person' : 'md-person'}
-                                  size={23} color='#fff' type="ionicon"
-                                  containerStyle={{padding:0,justifyContent:"flex-start"}}
-                                  iconStyle={{padding:0}}
-                                />
-                        </View>        
-            </View> */}
+        </ScrollView>
       </View>
     );
   }
@@ -129,7 +119,6 @@ export default class SigninScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: Colors.theme.whiteColor
     justifyContent:'center',
     backgroundColor:'#343b45'
   },
