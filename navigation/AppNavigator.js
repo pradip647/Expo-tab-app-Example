@@ -8,6 +8,6 @@ export default createSwitchNavigator({
   Main: MainTabNavigator,
   Auth:AuthStack
 },{
-  // initialRouteName:'Main'
-  initialRouteName:'Auth'
+  initialRouteName:'Main'
+  // initialRouteName:'Auth'
 });

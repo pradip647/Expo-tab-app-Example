@@ -25,6 +25,7 @@ export default class SignupScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+      <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
         <ScrollView>
             {/* <View style={{height:(Header.HEIGHT *2)}}></View> */}
             <Image
@@ -174,6 +175,7 @@ export default class SignupScreen extends React.Component {
 
 
         </ScrollView>
+        </KeyboardAvoidingView>
       </View>
     );
   }

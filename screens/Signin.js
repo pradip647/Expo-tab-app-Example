@@ -4,6 +4,7 @@ import { Colors,Fonts } from '../constants';
 import { MonoText } from '../components/StyledText';
 
 import { Icon, Card,Image,Input } from 'react-native-elements';
+import {KeyboardAvoidingView} from 'react-native';
 
 export default class SigninScreen extends React.Component {
   static navigationOptions = {
@@ -25,6 +26,7 @@ export default class SigninScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+      <KeyboardAvoidingView style={styles.container} behavior="padding" enabled>
         <ScrollView>
             <View style={{paddingTop:30}}>
                 <Image
@@ -87,7 +89,7 @@ export default class SigninScreen extends React.Component {
                               </TouchableOpacity>
                         </View>
                         <View style={{ flex:0.7,justifyContent:"center",backgroundColor:'#FFB842'}}>
-                            <TouchableOpacity >
+                            <TouchableOpacity onPress={()=>this.props.navigation.navigate('Main')}>
                                 <Text style={{color:'#fff',textAlign:"center",fontSize:14,paddingTop:10,paddingBottom:10,fontWeight:"bold",letterSpacing:2}}> SIGN IN</Text>
                               </TouchableOpacity>
                         </View>            
@@ -110,6 +112,7 @@ export default class SigninScreen extends React.Component {
                         </View> 
             </View>
         </ScrollView>
+        </KeyboardAvoidingView>
       </View>
     );
   }

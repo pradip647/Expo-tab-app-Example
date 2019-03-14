@@ -57,9 +57,11 @@ SettingsStack.navigationOptions = {
 };
 
 export default createBottomTabNavigator({
+  // HomeStack,
+  // LinksStack,
+  SettingsStack,
   HomeStack,
   LinksStack,
-  SettingsStack,
 },
 {tabBarOptions:{
   pressColor: Colors.theme.header.primary,
